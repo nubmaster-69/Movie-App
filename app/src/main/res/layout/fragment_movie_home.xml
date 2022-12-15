@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.MovieHomeFragment"
+    android:orientation="vertical"
+    android:background="@color/semi_black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/feature_movie"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_18ssp"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/white"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_feature_movie"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:paddingHorizontal="80dp"
+            android:paddingVertical="@dimen/_10sdp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/popular_movies"
+            android:textSize="@dimen/_18ssp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/white"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_movies_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:isScrollContainer="false"
+                android:background="@color/semi_black"/>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</ScrollView>

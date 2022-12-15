@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/movieHomeFragment">
+
+    <fragment
+        android:id="@+id/movieHomeFragment"
+        android:name="com.hisu.movieapp.ui.home.MovieHomeFragment"
+        android:label="fragment_movie_home"
+        tools:layout="@layout/fragment_movie_home" >
+        <action
+            android:id="@+id/movie_to_detail"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.hisu.movieapp.ui.detail.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <action
+            android:id="@+id/detail_to_movie"
+            app:destination="@id/movieHomeFragment" />
+    </fragment>
+</navigation>
