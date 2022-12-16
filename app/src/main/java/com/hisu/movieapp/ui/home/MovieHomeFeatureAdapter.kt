@@ -13,7 +13,7 @@ class MovieHomeFeatureAdapter :
     RecyclerView.Adapter<MovieHomeFeatureAdapter.MovieFeatureViewHolder>() {
 
     var featureMovies: List<MoviePreviewResult> = mutableListOf()
-    lateinit var onMovieItemClickListener: IOnMovieItemClickListener
+    var onMovieItemClickListener: IOnMovieItemClickListener? = null
 
     inner class MovieFeatureViewHolder(var binding: LayoutMovieHomeFeatureBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -37,10 +37,8 @@ class MovieHomeFeatureAdapter :
                 .into(imvMovieFeature)
 
             parentContainer.setOnClickListener {
-                if (onMovieItemClickListener != null)
-                    onMovieItemClickListener.itemClick(movie)
+                onMovieItemClickListener?.itemClick(movie)
             }
-
         }
     }
 

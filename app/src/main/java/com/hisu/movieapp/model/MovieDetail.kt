@@ -4,7 +4,7 @@ package com.hisu.movieapp.model
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetail(
-    val budget: Int,
+    val budget: String,
     val genres: List<Genre>,
     val homepage: String,
     val id: Int,
@@ -20,7 +20,7 @@ data class MovieDetail(
     val posterPath: String,
     @SerializedName("release_date")
     val releaseDate: String,
-    val revenue: Int,
+    val revenue: String,
     val runtime: Int,
     val status: String,
     val tagline: String,

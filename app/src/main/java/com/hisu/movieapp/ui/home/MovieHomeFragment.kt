@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -47,6 +46,7 @@ class MovieHomeFragment : Fragment() {
 
         initFeatureMovieList(view)
         initMoviesList(view)
+        viewAllMovies(view)
 
         val map = mutableMapOf<String, String>()
         map["language"] = "en-US"
@@ -102,18 +102,23 @@ class MovieHomeFragment : Fragment() {
             GridLayoutManager(mainActivity, 2, GridLayoutManager.VERTICAL, false)
 
         popularMoviesAdapter.onMovieItemClickListener = object : IOnMovieItemClickListener {
-        override fun itemClick(movie: MoviePreviewResult) {
-            val nav = Navigation.findNavController(view)
-            val bundle = Bundle()
-            bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, movie.id.toString())
-            nav.navigate(R.id.movie_to_detail, bundle)
+            override fun itemClick(movie: MoviePreviewResult) {
+                val nav = Navigation.findNavController(view)
+                val bundle = Bundle()
+                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, movie.id.toString())
+                nav.navigate(R.id.movie_to_detail, bundle)
+            }
         }
-    }
 
         adapter = popularMoviesAdapter
         layoutManager = gridLayoutManager
         isNestedScrollingEnabled = false
         setHasFixedSize(true)
+    }
+
+    private fun viewAllMovies(view: View) = mBinding.tvSeeAll.setOnClickListener {
+        val nav = Navigation.findNavController(view)
+        nav.navigate(R.id.home_to_all_movie)
     }
 
     override fun onDestroy() {

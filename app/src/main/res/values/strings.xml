@@ -3,6 +3,8 @@
     <string name="feature_movie">Feature movie</string>
     <string name="trending_today">Today\'s Trending</string>
     <string name="popular_movies">Popular movies</string>
+    <string name="see_all">See all</string>
+    <string name="all_movie">All Movie</string>
     <string name="movie_detail">Movie Info</string>
     <string name="release_date">Release Date</string>
     <string name="Rating">Rating</string>
@@ -10,4 +12,6 @@
     <string name="Budget">Budget</string>
     <string name="Revenue">Revenue</string>
     <string name="over_view">Overview:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

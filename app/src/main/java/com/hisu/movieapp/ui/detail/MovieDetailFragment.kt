@@ -69,7 +69,7 @@ class MovieDetailFragment : Fragment() {
                     tvRate.text = MyFormatUtils.ratingFormat(movie.voteAverage)
                     tvVoteTotal.text = MyFormatUtils.voteCountFormat(movie.voteCount)
                     tvReleaseDate.text = MyFormatUtils.dateFormat(movie.releaseDate)
-                    tvBudget.text = movie.budget.toString()
+                    tvBudget.text = movie.budget
                     tvOverview.text = movie.overview
                     tvRuntime.text = MyFormatUtils.runtimeFormat(movie.runtime)
 
@@ -77,7 +77,8 @@ class MovieDetailFragment : Fragment() {
                         val genreAdapter = GenreAdapter()
                         genreAdapter.genres = movie.genres
                         adapter = genreAdapter
-                        layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+                        layoutManager =
+                            LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
                     }
                 }
             })
@@ -87,10 +88,8 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    private fun backToHomeScreen(view: View) = mBinding.btnBack.apply {
-        setOnClickListener {
-            val nav = Navigation.findNavController(view)
-            nav.navigate(R.id.detail_to_movie)
-        }
+    private fun backToHomeScreen(view: View) = mBinding.btnBack.setOnClickListener {
+        val nav = Navigation.findNavController(view)
+        nav.popBackStack()
     }
 }

@@ -17,7 +17,7 @@ import java.util.*
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var movies: List<MoviePreviewResult> = mutableListOf()
-    lateinit var onMovieItemClickListener: IOnMovieItemClickListener
+    var onMovieItemClickListener: IOnMovieItemClickListener? = null
 
     inner class MovieViewHolder(var binding: LayoutMovieHomeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -41,8 +41,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 .into(imvMovieCoverImage)
 
             imvMovieCoverImage.setOnClickListener {
-                if (onMovieItemClickListener != null)
-                    onMovieItemClickListener.itemClick(movie)
+                onMovieItemClickListener?.itemClick(movie)
             }
         }
     }

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/movie_to_detail"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/home_to_all_movie"
+            app:destination="@id/seeAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -22,5 +25,20 @@
         <action
             android:id="@+id/detail_to_movie"
             app:destination="@id/movieHomeFragment" />
+        <action
+            android:id="@+id/detail_to_all_movie"
+            app:destination="@id/seeAllFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.hisu.movieapp.ui.see_all.SeeAllFragment"
+        android:label="fragment_see_all"
+        tools:layout="@layout/fragment_see_all" >
+        <action
+            android:id="@+id/all_movie_to_home"
+            app:destination="@id/movieHomeFragment" />
+        <action
+            android:id="@+id/all_movie_to_detail"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>
