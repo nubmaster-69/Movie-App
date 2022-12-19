@@ -1,26 +1,47 @@
-package com.hisu.movieapp.ui.home
+package com.hisu.movieapp.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hisu.movieapp.BuildConfig
-import com.hisu.movieapp.R
 import com.hisu.movieapp.databinding.LayoutMovieHomeItemBinding
 import com.hisu.movieapp.listener.IOnMovieItemClickListener
 import com.hisu.movieapp.model.MoviePreviewResult
 import com.hisu.movieapp.utils.MyFormatUtils
-import java.lang.Math.round
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    var movies: List<MoviePreviewResult> = mutableListOf()
+    var movies: List<MoviePreviewResult>
+        get() = differ.currentList
+        set(value) {
+            differ.submitList(value)
+        }
+
     var onMovieItemClickListener: IOnMovieItemClickListener? = null
 
     inner class MovieViewHolder(var binding: LayoutMovieHomeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    private val diffCallback = object: DiffUtil.ItemCallback<MoviePreviewResult>() {
+        override fun areItemsTheSame(
+            oldItem: MoviePreviewResult,
+            newItem: MoviePreviewResult
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: MoviePreviewResult,
+            newItem: MoviePreviewResult
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+
+    val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(

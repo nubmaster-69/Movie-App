@@ -1,9 +1,10 @@
 import com.hisu.movieapp.BuildConfig
 import com.hisu.movieapp.model.MovieDetail
 import com.hisu.movieapp.model.MoviePreviewResult
+import com.hisu.movieapp.model.MoviesResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -43,17 +44,13 @@ object API {
 }
 
 interface ApiService {
-    @GET("trending/movie/day")
-    fun getTrendingMovies(): Call<List<MoviePreviewResult>>
-
     //https://api.themoviedb.org/3/movie/popular?api_key=<>&language=en-US&page=1
     @GET("movie/popular")
-    suspend fun getPopularMovies(@QueryMap queries: Map<String, String>): Any
+    suspend fun getPopularMovies(@QueryMap queries: Map<String, String>): Response<Any>
 
     // https://api.themoviedb.org/3/movie/555604?api_key=<>&language=en-US
     @GET("movie/{movie_id}")
     suspend fun getMovieDetail(
-        @Path("movie_id") movie_id: String,
-        @QueryMap queries: Map<String, String>
-    ): MovieDetail
+        @Path("movie_id") movie_id: String, @QueryMap queries: Map<String, String>
+    ): Response<MovieDetail>
 }

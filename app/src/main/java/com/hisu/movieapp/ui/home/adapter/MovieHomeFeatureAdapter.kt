@@ -1,4 +1,4 @@
-package com.hisu.movieapp.ui.home
+package com.hisu.movieapp.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
