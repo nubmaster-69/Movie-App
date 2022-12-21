@@ -1,9 +1,11 @@
 package com.hisu.movieapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,9 +23,10 @@ import com.hisu.movieapp.ui.detail.MovieDetailFragment
 import com.hisu.movieapp.ui.home.adapter.MovieAdapter
 import com.hisu.movieapp.ui.home.adapter.MovieHomeFeatureAdapter
 import com.hisu.movieapp.utils.Resource
-import com.hisu.movieapp.view_model.MovieHomeViewModel
-import com.hisu.movieapp.view_model.MovieViewModelFactoryProvider
+import com.hisu.movieapp.ui.home.view_model.MovieHomeViewModel
+import com.hisu.movieapp.ui.home.view_model.MovieViewModelFactoryProvider
 import kotlin.math.abs
+import kotlin.reflect.typeOf
 
 class MovieHomeFragment : Fragment() {
 
@@ -41,14 +44,13 @@ class MovieHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentMovieHomeBinding.inflate(inflater, container, false)
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initFeatureMovieList()
         initMoviesList()
         viewAllMovies(view)
@@ -66,13 +68,20 @@ class MovieHomeFragment : Fragment() {
             map["page"] = "1"
 
             movieViewModel.getPopularMovies(map)
+            movieViewModel.getTrendingMovies()
+        }
+
+        movieViewModel.trendingMovies.observe(mainActivity) {
+            if (it is Resource.Success) {
+                val moviesResponse = it.data as ArrayList<MoviePreviewResult>
+                val res = moviesResponse.filter { movie -> movie.mediaType!! != "tv" } as ArrayList<MoviePreviewResult>
+                movieAdapter.featureMovies = res
+                mBinding.vpFeatureMovie.adapter = movieAdapter
+            }
         }
 
         movieViewModel.popularMovie.observe(mainActivity) {
-            if(it is Resource.Success) {
-                movieAdapter.featureMovies = it.data as ArrayList<MoviePreviewResult>
-                mBinding.vpFeatureMovie.adapter = movieAdapter
-
+            if (it is Resource.Success) {
                 popularMoviesAdapter.movies = it.data as ArrayList<MoviePreviewResult>
                 mBinding.rvMoviesList.adapter = popularMoviesAdapter
             }
@@ -80,7 +89,7 @@ class MovieHomeFragment : Fragment() {
     }
 
     private fun initFeatureMovieList() = mBinding.vpFeatureMovie.apply {
-        movieAdapter = MovieHomeFeatureAdapter()
+        movieAdapter = MovieHomeFeatureAdapter(mainActivity)
 
         val transformer = CompositePageTransformer()
 
@@ -95,9 +104,12 @@ class MovieHomeFragment : Fragment() {
         offscreenPageLimit = 3
 
         movieAdapter.onMovieItemClickListener = object : IOnMovieItemClickListener {
-            override fun itemClick(movie: MoviePreviewResult) {
+            override fun itemClick(movie: Any) {
                 val bundle = Bundle()
-                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, movie.id.toString())
+                bundle.putString(
+                    MovieDetailFragment.MOVIE_DETAIL_ARG,
+                    (movie as MoviePreviewResult).id.toString()
+                )
                 findNavController().navigate(R.id.movie_to_detail, bundle)
             }
         }
@@ -108,14 +120,17 @@ class MovieHomeFragment : Fragment() {
     }
 
     private fun initMoviesList() = mBinding.rvMoviesList.apply {
-        popularMoviesAdapter = MovieAdapter()
+        popularMoviesAdapter = MovieAdapter(mainActivity)
         val gridLayoutManager =
             GridLayoutManager(mainActivity, 2, GridLayoutManager.VERTICAL, false)
 
         popularMoviesAdapter.onMovieItemClickListener = object : IOnMovieItemClickListener {
-            override fun itemClick(movie: MoviePreviewResult) {
+            override fun itemClick(movie: Any) {
                 val bundle = Bundle()
-                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, movie.id.toString())
+                bundle.putString(
+                    MovieDetailFragment.MOVIE_DETAIL_ARG,
+                    (movie as MoviePreviewResult).id.toString()
+                )
                 findNavController().navigate(R.id.movie_to_detail, bundle)
             }
         }

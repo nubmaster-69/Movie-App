@@ -12,22 +12,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.hisu.movieapp.BuildConfig
 import com.hisu.movieapp.MainActivity
+import com.hisu.movieapp.R
 import com.hisu.movieapp.data.repository.impl.MovieRepositoryImpl
 import com.hisu.movieapp.databinding.FragmentMovieDetailBinding
-import com.hisu.movieapp.model.Genre
-import com.hisu.movieapp.model.MovieDetail
+import com.hisu.movieapp.listener.IOnMovieItemClickListener
+import com.hisu.movieapp.model.*
+import com.hisu.movieapp.ui.casts.CastsFragment
+import com.hisu.movieapp.ui.detail.adapter.CastsInfoAdapter
 import com.hisu.movieapp.ui.detail.adapter.GenreAdapter
+import com.hisu.movieapp.ui.detail.adapter.RelatedMovieAdapter
+import com.hisu.movieapp.ui.detail.view_model.MovieDetailViewModel
 import com.hisu.movieapp.utils.MyFormatUtils
 import com.hisu.movieapp.utils.Resource
-import com.hisu.movieapp.view_model.MovieHomeViewModel
-import com.hisu.movieapp.view_model.MovieViewModelFactoryProvider
+import com.hisu.movieapp.ui.home.view_model.MovieViewModelFactoryProvider
 
 class MovieDetailFragment : Fragment() {
 
     private lateinit var mainActivity: MainActivity
     private lateinit var mBinding: FragmentMovieDetailBinding
     private var movieID: String = ""
-    private lateinit var movieDetailViewModel: MovieHomeViewModel
+    private lateinit var movieDetailViewModel: MovieDetailViewModel
+    private lateinit var relatedMovieAdapter: RelatedMovieAdapter
+    private lateinit var castsInfoAdapter: CastsInfoAdapter
 
     companion object {
         const val MOVIE_DETAIL_ARG: String = "MOVIE_DETAIL_ARG"
@@ -52,19 +58,46 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         backToHomeScreen()
+        viewAllCasts()
+        initRelatedMoviesRecyclerView()
+        initCastsInfoRecyclerView()
         setupViewModel()
+    }
+
+    private fun viewAllCasts() = mBinding.tvViewAllCasts.setOnClickListener {
+        val bundle = Bundle()
+        bundle.putString(CastsFragment.MOVIE_CAST_ARG, movieID)
+        findNavController().navigate(R.id.detail_to_cast, bundle)
+    }
+
+    private fun initRelatedMoviesRecyclerView() = mBinding.rvRelated.apply {
+        relatedMovieAdapter = RelatedMovieAdapter(mainActivity)
+
+        relatedMovieAdapter.onMovieItemClickListener = object : IOnMovieItemClickListener {
+            override fun itemClick(movie: Any) {
+                val bundle = Bundle()
+                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, (movie as RelatedMovie).id.toString())
+                findNavController().navigate(R.id.view_related, bundle)
+            }
+        }
+
+        layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+
+        adapter = relatedMovieAdapter
     }
 
     private fun setupViewModel() {
         val movieRepository = MovieRepositoryImpl()
         val factory = MovieViewModelFactoryProvider(mainActivity.application, movieRepository)
         movieDetailViewModel =
-            ViewModelProvider(mainActivity, factory).get(MovieHomeViewModel::class.java)
+            ViewModelProvider(mainActivity, factory).get(MovieDetailViewModel::class.java)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             val queries = mutableMapOf<String, String>()
             queries["language"] = "en-US"
             movieDetailViewModel.getMovieDetail(movieID, queries)
+            movieDetailViewModel.getRelatedMovies(movieID, queries)
+            movieDetailViewModel.getCastsInfo(movieID)
         }
 
         movieDetailViewModel.movieDetail.observe(mainActivity) {
@@ -78,6 +111,20 @@ class MovieDetailFragment : Fragment() {
                 mBinding.pbDetailLoading.visibility = View.VISIBLE
             }
         }
+
+        movieDetailViewModel.relatedMovie.observe(mainActivity) {
+            if (it is Resource.Success) {
+                relatedMovieAdapter.relatedMovies = it.data as ArrayList<RelatedMovie>
+                relatedMovieAdapter.notifyDataSetChanged()
+            }
+        }
+
+        movieDetailViewModel.castsInfo.observe(mainActivity) {
+            if(it is Resource.Success) {
+                castsInfoAdapter.casts = (it.data as ArrayList<Cast>).take(5)// get first 5 items
+                castsInfoAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun setMovieDetail(movieDetailResult: MovieDetail) = mBinding.apply {
@@ -89,7 +136,6 @@ class MovieDetailFragment : Fragment() {
         tvRate.text = MyFormatUtils.ratingFormat(movieDetailResult.voteAverage)
         tvVoteTotal.text = MyFormatUtils.voteCountFormat(movieDetailResult.voteCount)
         tvReleaseDate.text = MyFormatUtils.dateFormat(movieDetailResult.releaseDate)
-        tvBudget.text = movieDetailResult.budget
         tvOverview.text = movieDetailResult.overview
         tvRuntime.text = MyFormatUtils.runtimeFormat(movieDetailResult.runtime)
 
@@ -100,6 +146,12 @@ class MovieDetailFragment : Fragment() {
         val genreAdapter = GenreAdapter()
         genreAdapter.genres = genres
         adapter = genreAdapter
+        layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun initCastsInfoRecyclerView() = mBinding.rvCasts.apply {
+        castsInfoAdapter = CastsInfoAdapter(mainActivity)
+        adapter = castsInfoAdapter
         layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
     }
 

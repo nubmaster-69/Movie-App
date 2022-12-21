@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">Movie App</string>
-    <string name="feature_movie">Feature movie</string>
+    <string name="feature_movie">Trending</string>
     <string name="trending_today">Today\'s Trending</string>
-    <string name="popular_movies">Popular movies</string>
+    <string name="popular_movies">Popular Movies</string>
     <string name="see_all">See all</string>
+    <string name="view_all_casts">View all</string>
     <string name="all_movie">All Movie</string>
+    <string name="movie_casts">All Casts</string>
+    <string name="as">Acting as</string>
     <string name="movie_detail">Movie Info</string>
     <string name="release_date">Release Date</string>
     <string name="Rating">Rating</string>
+    <string name="related">Similar Movies</string>
+    <string name="casts">Top Casts</string>
     <string name="Runtime">Runtime</string>
     <string name="Budget">Budget</string>
     <string name="Revenue">Revenue</string>

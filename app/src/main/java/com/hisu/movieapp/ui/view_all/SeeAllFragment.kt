@@ -1,4 +1,4 @@
-package com.hisu.movieapp.ui.see_all
+package com.hisu.movieapp.ui.view_all
 
 import android.os.Bundle
 import android.os.Handler
@@ -21,8 +21,8 @@ import com.hisu.movieapp.listener.IOnMovieItemClickListener
 import com.hisu.movieapp.model.MoviePreviewResult
 import com.hisu.movieapp.ui.detail.MovieDetailFragment
 import com.hisu.movieapp.ui.home.adapter.MovieAdapter
-import com.hisu.movieapp.view_model.MovieHomeViewModel
-import com.hisu.movieapp.view_model.MovieViewModelFactoryProvider
+import com.hisu.movieapp.ui.home.view_model.MovieHomeViewModel
+import com.hisu.movieapp.ui.home.view_model.MovieViewModelFactoryProvider
 
 class SeeAllFragment : Fragment() {
 
@@ -115,13 +115,13 @@ class SeeAllFragment : Fragment() {
     }
 
     private fun initMoviesList() = mBinding.rvAllMovies.apply {
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter(mainActivity)
         gridLayoutManager = GridLayoutManager(mainActivity, 2, GridLayoutManager.VERTICAL, false)
 
         movieAdapter.onMovieItemClickListener = object : IOnMovieItemClickListener {
-            override fun itemClick(movie: MoviePreviewResult) {
+            override fun itemClick(movie: Any) {
                 val bundle = Bundle()
-                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, movie.id.toString())
+                bundle.putString(MovieDetailFragment.MOVIE_DETAIL_ARG, (movie as MoviePreviewResult).id.toString())
                 findNavController().navigate(R.id.all_movie_to_detail, bundle)
             }
         }
@@ -136,6 +136,7 @@ class SeeAllFragment : Fragment() {
                     if (gridLayoutManager.findFirstVisibleItemPosition() > 5)
                         mBinding.btnBackToTop.show()
 
+                    //limit total pages to 5
                     if (!loading && page < 5 && (gridLayoutManager.childCount + gridLayoutManager.findFirstVisibleItemPosition())
                         >= gridLayoutManager.itemCount
                     ) loadPage(++page)

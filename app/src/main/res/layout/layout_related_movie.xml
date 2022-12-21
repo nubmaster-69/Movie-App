@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:padding="4dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imv_cover_image"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:scaleType="center"
+        android:src="@drawable/bg"
+        app:riv_corner_radius="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_movie_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/all_movie"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/_13ssp"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

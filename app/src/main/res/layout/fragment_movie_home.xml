@@ -63,7 +63,8 @@
                 android:id="@+id/rv_movies_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:isScrollContainer="false"
+                android:paddingTop="8dp"
+                android:paddingStart="8dp"
                 android:background="@color/semi_black"/>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

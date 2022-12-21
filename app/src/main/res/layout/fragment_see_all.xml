@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/semi_black"
-    tools:context=".ui.see_all.SeeAllFragment">
+    tools:context=".ui.view_all.SeeAllFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -41,8 +41,9 @@
             android:scaleType="center"
             app:maxImageSize="32dp"
             android:visibility="invisible"
-            app:fabSize="normal"
-            android:backgroundTint="@color/teal_200"
+            app:fabSize="mini"
+            android:backgroundTint="#7303DAC5"
+            app:backgroundTint="@null"
             app:tint="@android:color/white"
             android:src="@drawable/ic_back_to_top"
             android:layout_marginBottom="?actionBarSize"

@@ -1,4 +1,5 @@
 import com.hisu.movieapp.BuildConfig
+import com.hisu.movieapp.model.CastsResponse
 import com.hisu.movieapp.model.MovieDetail
 import com.hisu.movieapp.model.MoviePreviewResult
 import com.hisu.movieapp.model.MoviesResponse
@@ -9,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import java.util.concurrent.TimeUnit
 
@@ -47,6 +49,24 @@ interface ApiService {
     //https://api.themoviedb.org/3/movie/popular?api_key=<>&language=en-US&page=1
     @GET("movie/popular")
     suspend fun getPopularMovies(@QueryMap queries: Map<String, String>): Response<Any>
+
+    //https://api.themoviedb.org/3/trending/all/week?api_key=<>
+    @GET("trending/all/day")
+    suspend fun getTrendingMovies(): Response<Any>
+
+    //https://api.themoviedb.org/3/movie/19995/similar?api_key=5cc2f4b7351d0ac481d0cf59f176cd03&language=en-US&page=1
+    @GET("movie/{movie_id}/similar")
+    suspend fun getRelatedMovies(
+        @Path("movie_id") movie_id: String, @QueryMap queries: Map<String, String>
+    ): Response<Any>
+
+    //http://api.themoviedb.org/3/movie/123/casts?api_key=
+    @GET("movie/{movie_id}/casts")
+    suspend fun getCastsInfo(@Path("movie_id") movie_id: String): Response<Any>
+
+    //https://api.themoviedb.org/3/search/movie?api_key=&language=en-US&page=1&include_adult=false&query=?
+    @GET("search/movie")
+    suspend fun searchMovie(@QueryMap queries: Map<String, String>): Response<Any>
 
     // https://api.themoviedb.org/3/movie/555604?api_key=<>&language=en-US
     @GET("movie/{movie_id}")

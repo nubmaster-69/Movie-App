@@ -1,5 +1,6 @@
 package com.hisu.movieapp.ui.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -7,12 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hisu.movieapp.BuildConfig
+import com.hisu.movieapp.R
 import com.hisu.movieapp.databinding.LayoutMovieHomeItemBinding
 import com.hisu.movieapp.listener.IOnMovieItemClickListener
 import com.hisu.movieapp.model.MoviePreviewResult
 import com.hisu.movieapp.utils.MyFormatUtils
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(val context: Context) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var movies: List<MoviePreviewResult>
         get() = differ.currentList
@@ -57,8 +59,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             tvMovieReleaseYear.text = MyFormatUtils.dateFormat(movie.releaseDate)
             tvMovieRate.text = String.format("%.1f", movie.voteAverage)
 
-            Glide.with(imvMovieCoverImage)
-                .load(BuildConfig.POSTER_URL + movie.posterPath)
+            Glide.with(context)
+                .load(BuildConfig.POSTER_URL.plus(movie.posterPath))
+                .placeholder(context.getDrawable(R.drawable.loading_image))
+                .error(context.getDrawable(R.drawable.image_error))
                 .into(imvMovieCoverImage)
 
             imvMovieCoverImage.setOnClickListener {

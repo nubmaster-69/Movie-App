@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:background="@android:color/transparent">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imv_cast_pfp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/bg"
+        android:scaleType="center"
+        app:riv_corner_radius="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_cast_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Benedict Cumberbatch"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/as"
+        android:fontFamily="@font/poppins"
+        android:textSize="@dimen/_13sdp"
+        android:textColor="@color/star_bg"/>
+
+    <TextView
+        android:id="@+id/tv_cast_as"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_italic"
+        android:text="Dr. Stephen Strange / Sinister Strange / Defender Strange"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/white"/>
+</LinearLayout>

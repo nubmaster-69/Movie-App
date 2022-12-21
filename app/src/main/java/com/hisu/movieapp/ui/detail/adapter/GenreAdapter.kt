@@ -22,7 +22,6 @@ class GenreAdapter: RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
         holder.binding.apply {
             tvGenre.text = genre.name
         }
-
     }
 
     override fun getItemCount() = genres.size

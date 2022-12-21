@@ -57,14 +57,13 @@
 
             <TextView
                 android:id="@+id/tv_movie_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
 
@@ -128,7 +127,7 @@
                 android:id="@+id/tv_overview_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/over_view"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_18sdp"
@@ -136,7 +135,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/rv_genre" />
+                app:layout_constraintTop_toBottomOf="@+id/imv_release" />
 
             <TextView
                 android:id="@+id/tv_overview"
@@ -154,10 +153,10 @@
                 android:id="@+id/imv_time"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/ic_run_time"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/tv_overview"
+                app:layout_constraintTop_toBottomOf="@+id/rv_genre"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -170,7 +169,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/imv_time"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imv_time"
                 app:layout_constraintTop_toTopOf="@+id/imv_time" />
 
@@ -198,29 +196,62 @@
                 app:layout_constraintStart_toEndOf="@+id/imv_release"
                 app:layout_constraintTop_toTopOf="@+id/imv_release" />
 
-            <ImageView
-                android:id="@+id/imv_budget_desc"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_budget"
+            <TextView
+                android:id="@+id/tv_casts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_18sdp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="@string/casts"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/imv_release"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview"/>
 
             <TextView
-                android:id="@+id/tv_budget"
+                android:id="@+id/tv_view_all_casts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/view_all_casts"
+                android:drawableRight="@drawable/ic_see_all"
+                android:textColor="@color/star_bg"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_casts"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/tv_casts" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_casts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/imv_budget_desc"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imv_budget_desc"
-                app:layout_constraintTop_toTopOf="@+id/imv_budget_desc" />
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_casts" />
+
+            <TextView
+                android:id="@+id/tv_might_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_18sdp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="@string/related"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/rv_casts"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_related"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_might_like" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
