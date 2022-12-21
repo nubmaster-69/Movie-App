@@ -9,10 +9,11 @@
 - Retrofit
 - View model + Live Data
 - Coroutine
+- Navigation Component
 - Endless Scroll
 
 
-### Demo -> [Smash me!](https://youtu.be/DRZQuvSJNYw)
+*Demo -> [Smash me!](https://youtu.be/DRZQuvSJNYw)*
 ## Some Screenshots From The App
 | Home Screen  |  Movie Detail | Casts, Similar Movies | More Movies |
 |------|--------------|--------|----|
