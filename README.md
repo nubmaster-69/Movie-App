@@ -13,7 +13,7 @@
 - Endless Scroll
 
 
-*Demo -> [Smash me!](https://youtu.be/DRZQuvSJNYw)*
+*Demo -> [Smash me!](https://www.youtube.com/watch?v=DRZQuvSJNYw&t=8s&ab_channel=HieuNguyen)*
 ## Some Screenshots From The App
 | Home Screen  |  Movie Detail | Casts, Similar Movies | More Movies |
 |------|--------------|--------|----|
